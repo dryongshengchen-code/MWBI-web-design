@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Section, User } from '../types';
 
@@ -16,7 +15,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentSection, onNavigate, user
   const navItems = [
     { label: '大觉首页', value: Section.HOME },
     { label: '寺院简介', value: Section.ABOUT },
-    { label: '文殊学院', value: Section.ACADEMY },
+    { label: '佛学课程', value: Section.ACADEMY },
     { label: '法务行事', value: Section.EVENTS },
     { label: '善行分享', value: Section.SHARING },
     { label: '功德护持', value: Section.DONATE },
@@ -29,13 +28,8 @@ export const Navbar: React.FC<NavbarProps> = ({ currentSection, onNavigate, user
           {/* Logo Area */}
           <div className="flex items-center cursor-pointer" onClick={() => onNavigate(Section.HOME)}>
             <div className="flex flex-col">
-              <span className="text-2xl font-serif font-bold text-monk-800 tracking-wide">大觉寺</span>
-              <span className="text-xs text-monk-500 uppercase tracking-widest">Toronto Dajue Temple</span>
-            </div>
-            <div className="h-8 w-px bg-monk-200 mx-4 hidden md:block"></div>
-            <div className="flex-col hidden md:flex">
-              <span className="text-lg font-serif font-bold text-monk-700">文殊学院</span>
-              <span className="text-[10px] text-monk-500 uppercase">Manju Wisdom Buddhist Institute</span>
+              <span className="text-2xl font-serif font-bold text-monk-800 tracking-wide">多伦多大觉寺</span>
+              <span className="text-[10px] text-monk-500 uppercase tracking-wider">Manju Wisdom Buddhist Institute</span>
             </div>
           </div>
 

@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Navbar } from './components/Navbar';
 import { AuthModal } from './components/AuthModal';
@@ -32,8 +31,8 @@ const donationItems: DonationItem[] = [
   },
   {
     id: 'academy',
-    title: '文殊智慧助学金',
-    description: '支持文殊学院课程开发、经典翻译与贫困学生学费减免，培育僧才与弘法人才。',
+    title: '佛学教育助学金',
+    description: '支持寺院课程开发、经典翻译与贫困学生学费减免，培育僧才与弘法人才。',
     minAmount: 50,
     image: 'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&q=80&w=800',
     category: 'academy'
@@ -94,7 +93,7 @@ const mockEvents: EventItem[] = [
     title: '佛学基础讲座',
     date: `${year}-${pad(month)}-08`,
     time: '02:00 PM - 04:00 PM',
-    location: '文殊讲堂',
+    location: '般若讲堂',
     description: '讲题：缘起法与现代生活。主讲：慧明法师。',
     category: 'class'
   },
@@ -135,7 +134,7 @@ const initialSharingItems: SharingItem[] = [
     date: '2024-03-15',
     tag: '禅修心得',
     image: 'https://images.unsplash.com/photo-1518155317743-a8ff43ea6a5d?auto=format&fit=crop&q=80&w=800',
-    content: '以前总觉得工作压力大，透不过气。自从参加了文殊学院的初级禅修班，学会了每天花十分钟观照呼吸。虽然时间不长，但这短暂的宁静让我学会了抽离，不再被情绪牵着走。感恩师父的慈悲开示，让我明白了"活在当下"不仅仅是一句口号，而是一种可以实践的生活方式。',
+    content: '以前总觉得工作压力大，透不过气。自从参加了大觉寺的初级禅修班，学会了每天花十分钟观照呼吸。虽然时间不长，但这短暂的宁静让我学会了抽离，不再被情绪牵着走。感恩师父的慈悲开示，让我明白了"活在当下"不仅仅是一句口号，而是一种可以实践的生活方式。',
     reactions: { sadhu: 12, rejoice: 5, zen: 3 }
   },
   {
@@ -266,8 +265,8 @@ const App: React.FC = () => {
             多伦多大觉寺
           </h1>
           <p className="text-xl md:text-2xl text-monk-100 font-light mb-10 max-w-2xl leading-relaxed">
-            弘扬清净圆满佛教 · 建设快乐心灵家园<br/>
-            <span className="text-base mt-2 block opacity-80">Manju Wisdom Buddhist Institute</span>
+            Manju Wisdom Buddhist Institute<br/>
+            <span className="text-base mt-2 block opacity-80">弘扬清净圆满佛教 · 建设快乐心灵家园</span>
           </p>
           <button 
             onClick={() => {
@@ -292,7 +291,7 @@ const App: React.FC = () => {
             </div>
             <div className="p-8 bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow border-t-4 border-monk-700 cursor-pointer" onClick={() => setCurrentSection(Section.ACADEMY)}>
               <div className="text-4xl mb-4 text-monk-700">📖</div>
-              <h3 className="text-xl font-serif font-bold text-gray-800 mb-3">文殊学院</h3>
+              <h3 className="text-xl font-serif font-bold text-gray-800 mb-3">佛学课程</h3>
               <p className="text-gray-600 leading-relaxed">深入经藏，智慧如海。提供系统的佛学课程与禅修指导。</p>
             </div>
             <div className="p-8 bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow border-t-4 border-monk-700 cursor-pointer" onClick={() => setCurrentSection(Section.EVENTS)}>
@@ -319,7 +318,7 @@ const App: React.FC = () => {
           <div className="md:w-1/2">
             <h3 className="text-2xl font-serif font-bold text-monk-800 mb-4">缘起与愿景</h3>
             <p className="text-gray-600 leading-loose mb-4">
-              多伦多大觉寺成立于2015年，以弘扬《菩提道次第广论》为核心，致力于在现代生活中实践佛陀的悲智精神，同时是传承中华文化和净化心灵的重要平台。
+              多伦多大觉寺（Manju Wisdom Buddhist Institute）成立于2015年，以弘扬《菩提道次第广论》为核心，致力于在现代生活中实践佛陀的悲智精神，同时是传承中华文化和净化心灵的重要平台。
             </p>
             <p className="text-gray-600 leading-loose">
               我们定期举办共修法会、传统节日庆典以及社区慈善活动，愿每一位走进大觉寺的人，都能在此找回内心的宁静与觉性。
@@ -334,7 +333,7 @@ const App: React.FC = () => {
     <div className="bg-white min-h-screen animate-fade-in">
       <div className="bg-slate-100 py-16 text-center relative overflow-hidden">
         <div className="absolute top-0 left-0 w-full h-full bg-[url('https://www.transparenttextures.com/patterns/rice-paper.png')] opacity-50"></div>
-        <h2 className="text-4xl font-serif font-bold text-slate-800 mb-4 relative z-10">文殊学院</h2>
+        <h2 className="text-4xl font-serif font-bold text-slate-800 mb-4 relative z-10">佛学课程</h2>
         <p className="text-slate-600 relative z-10">开启智慧之门 · 探索生命真谛</p>
       </div>
 
@@ -435,7 +434,7 @@ const App: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 grid md:grid-cols-3 gap-8 text-sm">
           <div>
              <h4 className="text-white font-serif text-lg mb-4">多伦多大觉寺</h4>
-             <p>Toronto Dajue Temple & Manju Wisdom Buddhist Institute</p>
+             <p>Manju Wisdom Buddhist Institute</p>
              <p className="mt-4">123 Buddhist Way, Toronto, ON, Canada</p>
              <p>Tel: (416) 123-4567</p>
           </div>
