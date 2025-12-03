@@ -42,7 +42,7 @@ const donationItems: DonationItem[] = [
     title: '建寺安僧与弘法基金',
     description: '护持道场日常运作，安顿僧众生活，举办弘法利生之活动，维护道场庄严。',
     minAmount: 20,
-    image: 'https://images.unsplash.com/photo-1580433236571-7403b8cc65da?auto=format&fit=crop&q=80&w=800',
+    image: 'https://pei.gebis.org/wp-content/uploads/2022/05/%E5%A6%82%E6%84%8F%E9%BD%8B%E4%B8%BB1200X674.jpg?auto=format&fit=crop&q=80&w=800',
     category: 'charity'
   },
   {
@@ -50,7 +50,7 @@ const donationItems: DonationItem[] = [
      title: '佛前供花 (Flower Offering)',
      description: '愿此香花云，遍满十方界。供养佛前花，以此功德庄严身相，人见欢喜。',
      minAmount: 30,
-     image: 'https://images.unsplash.com/photo-1563241527-3005a767980b?auto=format&fit=crop&q=80&w=800',
+     image: 'https://manjuwisdom.org/wp-content/uploads/2024/05/%E8%8A%B1-300x300.jpg?auto=format&fit=crop&q=80&w=800',
      category: 'dharma'
   },
   {
@@ -58,7 +58,7 @@ const donationItems: DonationItem[] = [
      title: '建寺功德砖',
      description: '添砖加瓦，共建如来之家。每一块砖都是您护持正法的见证。',
      minAmount: 100,
-     image: 'https://images.unsplash.com/photo-1590059397669-1b3da4432442?auto=format&fit=crop&q=80&w=800',
+     image: 'https://pei.gebis.org/wp-content/uploads/2022/08/%E5%82%B3%E7%87%88%E7%93%A6icon.jpg?auto=format&fit=crop&q=80&w=800',
      category: 'construction'
   }
 ];
@@ -133,7 +133,7 @@ const initialSharingItems: SharingItem[] = [
     author: '王慧心',
     date: '2024-03-15',
     tag: '禅修心得',
-    image: 'https://images.unsplash.com/photo-1518155317743-a8ff43ea6a5d?auto=format&fit=crop&q=80&w=800',
+    image: 'https://picx.zhimg.com/70/v2-34c331d278c42ee3f8babad87000c160_1440w.avis?source=172ae18b&biz_tag=Post?auto=format&fit=crop&q=80&w=800',
     content: '以前总觉得工作压力大，透不过气。自从参加了大觉寺的初级禅修班，学会了每天花十分钟观照呼吸。虽然时间不长，但这短暂的宁静让我学会了抽离，不再被情绪牵着走。感恩师父的慈悲开示，让我明白了"活在当下"不仅仅是一句口号，而是一种可以实践的生活方式。',
     reactions: { sadhu: 12, rejoice: 5, zen: 3 }
   },
@@ -143,7 +143,7 @@ const initialSharingItems: SharingItem[] = [
     author: '李志强',
     date: '2024-02-28',
     tag: '课程感悟',
-    image: 'https://images.unsplash.com/photo-1544367563-12123d8965cd?auto=format&fit=crop&q=80&w=800',
+    image: 'https://p5.itc.cn/q_70/images03/20231214/80ee620c99e540fcac8066f10f6d475b.jpeg?auto=format&fit=crop&q=80&w=800',
     content: '在学习《菩提道次第广论》关于"念死无常"和"业果"的章节后，我开始反思自己对待家人的态度。以前总是理所当然地觉得父母应该理解我，妻子应该支持我。现在我明白，因缘和合才能成为一家人，应该倍加珍惜。现在的我，更愿意倾听，更愿意付出，家里的笑声也变多了。',
     reactions: { sadhu: 20, rejoice: 8, zen: 10 }
   },
@@ -163,7 +163,7 @@ const initialSharingItems: SharingItem[] = [
     author: '陈美玲',
     date: '2024-01-01',
     tag: '法会随笔',
-    image: 'https://images.unsplash.com/photo-1516053868202-b25f187050a4?auto=format&fit=crop&q=80&w=800',
+    image: 'https://contributions.gwbi.org/wp-content/uploads/2025/10/landingpage_2026%E5%85%89%E6%98%8E%E7%87%88.jpg?auto=format&fit=crop&q=80&w=800',
     content: '每年的新年，我都会来大觉寺点一盏光明灯。看着大殿里万灯齐明的壮观景象，内心无比震撼。那一刻，我祈愿的不仅仅是自己的一年顺遂，更希望这盏灯能照亮所有在黑暗中迷茫的众生。这一份善念，让我觉得今年的开始特别有意义。',
     reactions: { sadhu: 45, rejoice: 12, zen: 8 }
   },
