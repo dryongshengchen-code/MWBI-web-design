@@ -1,5 +1,0 @@
-To deploy, add the following line to <body> in index.html
-<script type="module" src="/index.tsx"></script>
-
-In vercel.com, when deploy, add Environment Variables:
-GEMINI_API_KEY  12345   (any fake number)

@@ -20,6 +20,7 @@ export interface DonationItem {
   image: string;
   category: DonationCategoryType;
   allowInstallment?: boolean;
+  imagePosition?: 'top' | 'center' | 'bottom';
 }
 
 export interface CartItem extends DonationItem {

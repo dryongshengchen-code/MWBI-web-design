@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Navbar } from './components/Navbar';
 import { AuthModal } from './components/AuthModal';
@@ -27,7 +28,8 @@ const donationItems: DonationItem[] = [
     minAmount: 500,
     image: 'https://manjuwisdom.org/wp-content/uploads/2025/01/%E4%BD%9B%E5%83%8F1%E5%B0%8A-scaled.jpg',
     category: 'construction',
-    allowInstallment: true
+    allowInstallment: true,
+    imagePosition: 'top'
   },
   {
     id: 'academy',
@@ -153,7 +155,7 @@ const initialSharingItems: SharingItem[] = [
     author: '张明',
     date: '2024-01-20',
     tag: '义工日志',
-    image: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=800',
+    image: 'https://image.presslogic.com/girls.presslogic.com/wp-content/uploads/2022/08/dc46fd6a-e1660214518888.jpg?auto=format&fit=crop&q=80&w=800',
     content: '第一次来大觉寺做义工，被分配到大寮（厨房）洗碗。刚开始觉得只是体力活，但师兄告诉我，"洗碗也是洗心"。每一次擦拭碗盘，都是在擦拭自己内心的尘垢。在那个下午，虽然身体疲惫，但看着几百个碗盘变得光亮如新，内心充满了前所未有的清净与喜悦。',
     reactions: { sadhu: 33, rejoice: 2, zen: 5 }
   },

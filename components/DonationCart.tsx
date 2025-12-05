@@ -45,63 +45,66 @@ export const DonationCart: React.FC<DonationCartProps> = ({
       <div className="flex flex-col lg:flex-row gap-8">
         {/* Cart Items List */}
         <div className="flex-1 space-y-6">
-          {items.map((item) => (
-            <div key={item.uniqueId} className="bg-white rounded-xl p-4 md:p-6 shadow-sm border border-gray-100 flex flex-col md:flex-row items-start md:items-center gap-6">
-              {/* Image */}
-              <div className="w-full md:w-24 h-24 flex-shrink-0 rounded-lg overflow-hidden bg-gray-100 relative">
-                <img src={item.image} alt={item.title} className="w-full h-full object-cover" />
-              </div>
-              
-              {/* Info */}
-              <div className="flex-1 min-w-0">
-                <div className="flex items-center gap-2 mb-1">
-                  <h3 className="text-lg font-bold text-gray-800 font-serif truncate">{item.title}</h3>
-                  {item.isInstallment && (
-                    <span className="bg-blue-100 text-blue-700 text-[10px] px-2 py-0.5 rounded-full font-bold">
-                      分期付款
-                    </span>
-                  )}
-                </div>
-                <p className="text-sm text-gray-500 mb-2">{item.description.substring(0, 60)}...</p>
-                <div className="text-monk-600 font-medium">
-                  单价: ${item.selectedAmount}
-                </div>
-              </div>
-
-              {/* Controls */}
-              <div className="flex items-center gap-6 w-full md:w-auto justify-between md:justify-end">
-                <div className="flex items-center border border-gray-200 rounded-lg">
-                   <button 
-                     onClick={() => onUpdateQuantity(item.uniqueId, Math.max(1, item.quantity - 1))}
-                     className="px-3 py-1 hover:bg-gray-50 text-gray-600"
-                   >
-                     -
-                   </button>
-                   <span className="px-3 py-1 text-gray-800 font-medium border-l border-r border-gray-200 min-w-[2.5rem] text-center">
-                     {item.quantity}
-                   </span>
-                   <button 
-                     onClick={() => onUpdateQuantity(item.uniqueId, item.quantity + 1)}
-                     className="px-3 py-1 hover:bg-gray-50 text-gray-600"
-                   >
-                     +
-                   </button>
+          {items.map((item) => {
+            const imgPos = item.imagePosition === 'top' ? 'object-top' : item.imagePosition === 'bottom' ? 'object-bottom' : 'object-center';
+            return (
+              <div key={item.uniqueId} className="bg-white rounded-xl p-4 md:p-6 shadow-sm border border-gray-100 flex flex-col md:flex-row items-start md:items-center gap-6">
+                {/* Image */}
+                <div className="w-full md:w-24 h-24 flex-shrink-0 rounded-lg overflow-hidden bg-gray-100 relative">
+                  <img src={item.image} alt={item.title} className={`w-full h-full object-cover ${imgPos}`} />
                 </div>
                 
-                <div className="text-right min-w-[5rem]">
-                   <div className="text-lg font-bold text-gray-800">${(item.selectedAmount * item.quantity).toLocaleString()}</div>
+                {/* Info */}
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center gap-2 mb-1">
+                    <h3 className="text-lg font-bold text-gray-800 font-serif truncate">{item.title}</h3>
+                    {item.isInstallment && (
+                      <span className="bg-blue-100 text-blue-700 text-[10px] px-2 py-0.5 rounded-full font-bold">
+                        分期付款
+                      </span>
+                    )}
+                  </div>
+                  <p className="text-sm text-gray-500 mb-2">{item.description.substring(0, 60)}...</p>
+                  <div className="text-monk-600 font-medium">
+                    单价: ${item.selectedAmount}
+                  </div>
                 </div>
 
-                <button 
-                  onClick={() => onRemove(item.uniqueId)}
-                  className="p-2 text-gray-400 hover:text-red-500 transition-colors"
-                  title="Remove"
-                >
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
-                </button>
+                {/* Controls */}
+                <div className="flex items-center gap-6 w-full md:w-auto justify-between md:justify-end">
+                  <div className="flex items-center border border-gray-200 rounded-lg">
+                    <button 
+                      onClick={() => onUpdateQuantity(item.uniqueId, Math.max(1, item.quantity - 1))}
+                      className="px-3 py-1 hover:bg-gray-50 text-gray-600"
+                    >
+                      -
+                    </button>
+                    <span className="px-3 py-1 text-gray-800 font-medium border-l border-r border-gray-200 min-w-[2.5rem] text-center">
+                      {item.quantity}
+                    </span>
+                    <button 
+                      onClick={() => onUpdateQuantity(item.uniqueId, item.quantity + 1)}
+                      className="px-3 py-1 hover:bg-gray-50 text-gray-600"
+                    >
+                      +
+                    </button>
+                  </div>
+                  
+                  <div className="text-right min-w-[5rem]">
+                    <div className="text-lg font-bold text-gray-800">${(item.selectedAmount * item.quantity).toLocaleString()}</div>
+                  </div>
+
+                  <button 
+                    onClick={() => onRemove(item.uniqueId)}
+                    className="p-2 text-gray-400 hover:text-red-500 transition-colors"
+                    title="Remove"
+                  >
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
+                  </button>
+                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
 
           <button 
              onClick={onContinueShopping}
