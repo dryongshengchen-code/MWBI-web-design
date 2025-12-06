@@ -8,7 +8,8 @@ export enum Section {
   DONATE = 'DONATE',
   CONTACT = 'CONTACT',
   USER_DASHBOARD = 'USER_DASHBOARD',
-  VOLUNTEER = 'VOLUNTEER'
+  VOLUNTEER = 'VOLUNTEER',
+  ADMIN = 'ADMIN'
 }
 
 export type DonationCategoryType = 'construction' | 'dharma' | 'charity' | 'academy';
@@ -35,6 +36,7 @@ export interface User {
   name: string;
   email: string;
   isLoggedIn: boolean;
+  isAdmin?: boolean;
 }
 
 export interface ChatMessage {
@@ -75,4 +77,12 @@ export interface ForumPost {
   content: string;
   category: 'NOTICE' | 'RECRUIT' | 'SHARING' | 'QNA';
   replies?: number;
+}
+
+export interface CourseItem {
+  id: string;
+  title: string;
+  description: string;
+  tags: string[]; // e.g. ["招生中", "每周六"]
+  color: 'green' | 'blue' | 'orange' | 'purple'; // For UI styling
 }

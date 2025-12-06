@@ -52,6 +52,18 @@ export const Navbar: React.FC<NavbarProps> = ({ currentSection, onNavigate, user
             
             {user.isLoggedIn ? (
               <div className="flex items-center space-x-4 pl-4 border-l border-monk-200">
+                 {user.isAdmin && (
+                   <button
+                     onClick={() => onNavigate(Section.ADMIN)}
+                     className={`text-sm font-bold px-3 py-1 rounded border ${
+                       currentSection === Section.ADMIN 
+                         ? 'bg-red-50 text-red-700 border-red-200' 
+                         : 'text-gray-500 border-gray-200 hover:bg-gray-50'
+                     }`}
+                   >
+                     管理后台
+                   </button>
+                 )}
                  <button
                   onClick={() => onNavigate(Section.USER_DASHBOARD)}
                   className={`flex items-center gap-2 text-sm font-medium transition-colors ${
@@ -117,6 +129,14 @@ export const Navbar: React.FC<NavbarProps> = ({ currentSection, onNavigate, user
              <div className="pt-4 border-t border-monk-100 mt-4">
                 {user.isLoggedIn ? (
                    <div className="px-3 space-y-3">
+                      {user.isAdmin && (
+                        <button
+                          onClick={() => { onNavigate(Section.ADMIN); setIsMenuOpen(false); }}
+                          className="block w-full text-left px-3 py-2 text-red-600 font-bold"
+                        >
+                          管理后台
+                        </button>
+                      )}
                       <button 
                         onClick={() => {
                           onNavigate(Section.USER_DASHBOARD);

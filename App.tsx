@@ -10,10 +10,11 @@ import { DonationMarketplace } from './components/DonationMarketplace';
 import { DonationCart } from './components/DonationCart';
 import { DonationCheckout } from './components/DonationCheckout';
 import { VolunteerForum } from './components/VolunteerForum';
-import { Section, User, DonationItem, EventItem, SharingItem, CartItem, ForumPost } from './types';
+import { AdminDashboard } from './components/AdminDashboard';
+import { Section, User, DonationItem, EventItem, SharingItem, CartItem, ForumPost, CourseItem } from './types';
 
-// Mock Data for Donations
-const donationItems: DonationItem[] = [
+// Mock Initial Data
+const initialDonationItems: DonationItem[] = [
   {
     id: 'light',
     title: '全年光明灯 (Light Offering)',
@@ -45,7 +46,7 @@ const donationItems: DonationItem[] = [
     title: '建寺安僧与弘法基金',
     description: '护持道场日常运作，安顿僧众生活，举办弘法利生之活动，维护道场庄严。',
     minAmount: 20,
-    image: 'https://images.unsplash.com/photo-1598555235282-53603d6f1473?auto=format&fit=crop&q=80&w=800', // Updated to reliable image
+    image: 'https://images.unsplash.com/photo-1598555235282-53603d6f1473?auto=format&fit=crop&q=80&w=800', 
     category: 'charity'
   },
   {
@@ -66,13 +67,12 @@ const donationItems: DonationItem[] = [
   }
 ];
 
-// Helper to generate events for current month for demo purposes
 const today = new Date();
 const year = today.getFullYear();
 const month = today.getMonth() + 1;
 const pad = (n: number) => String(n).padStart(2, '0');
 
-const mockEvents: EventItem[] = [
+const initialEvents: EventItem[] = [
   {
     id: 'e1',
     title: '周日共修法会',
@@ -182,6 +182,30 @@ const initialSharingItems: SharingItem[] = [
   }
 ];
 
+const initialCourses: CourseItem[] = [
+  {
+    id: 'c1',
+    title: '初级佛学班',
+    description: '适合零基础学员，系统介绍佛教历史、基本教义（四圣谛、八正道）及基础礼仪。',
+    tags: ['招生中'],
+    color: 'green'
+  },
+  {
+    id: 'c2',
+    title: '经典导读班',
+    description: '深入研读《金刚经》、《心经》、《法华经》等大乘经典，探究般若智慧。',
+    tags: ['每周六上课'],
+    color: 'blue'
+  },
+  {
+    id: 'c3',
+    title: '禅修实修营',
+    description: '通过坐禅、行香，学习调身、调息、调心，在动静之间体悟当下的力量。',
+    tags: ['每月举办'],
+    color: 'orange'
+  }
+];
+
 const initialForumPosts: ForumPost[] = [
   {
     id: 'f1',
@@ -215,8 +239,8 @@ const initialForumPosts: ForumPost[] = [
 // Hero Background Images
 const heroImages = [
   "https://pei.gebis.org/wp-content/uploads/2022/07/about-sec-pic-3.jpg?auto=format&fit=crop&q=80&w=1920",
-  "https://images.unsplash.com/photo-1600609842388-3e449195d2c4?q=80&w=1920&auto=format&fit=crop", // Serene temple vibes
-  "https://images.unsplash.com/photo-1592348529249-165f14844331?q=80&w=1920&auto=format&fit=crop"  // Another temple view
+  "https://images.unsplash.com/photo-1600609842388-3e449195d2c4?q=80&w=1920&auto=format&fit=crop", 
+  "https://images.unsplash.com/photo-1592348529249-165f14844331?q=80&w=1920&auto=format&fit=crop"
 ];
 
 const App: React.FC = () => {
@@ -224,12 +248,15 @@ const App: React.FC = () => {
   const [isAuthOpen, setIsAuthOpen] = useState(false);
   const [user, setUser] = useState<User>({ name: '', email: '', isLoggedIn: false });
 
+  // Dynamic Content State (Lifted for Admin)
+  const [donationItems, setDonationItems] = useState<DonationItem[]>(initialDonationItems);
+  const [events, setEvents] = useState<EventItem[]>(initialEvents);
+  const [sharingItems, setSharingItems] = useState<SharingItem[]>(initialSharingItems);
+  const [courses, setCourses] = useState<CourseItem[]>(initialCourses);
+
   // Donation Cart State
   const [cart, setCart] = useState<CartItem[]>([]);
   const [donationStep, setDonationStep] = useState<'MARKETPLACE' | 'CART' | 'CHECKOUT'>('MARKETPLACE');
-
-  // Sharing State
-  const [sharingItems, setSharingItems] = useState<SharingItem[]>(initialSharingItems);
 
   // Forum State
   const [forumPosts, setForumPosts] = useState<ForumPost[]>(initialForumPosts);
@@ -240,16 +267,19 @@ const App: React.FC = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentHeroIndex((prev) => (prev + 1) % heroImages.length);
-    }, 5000); // Change image every 5 seconds
+    }, 5000); 
 
     return () => clearInterval(interval);
   }, []);
 
   const handleLogin = (name: string, email: string) => {
-    setUser({ name, email, isLoggedIn: true });
-    // If user was trying to access volunteer forum, they can stay there, otherwise go to dashboard
+    // Simple Admin Check for Demo
+    const isAdmin = email.toLowerCase().includes('admin@dajue.org') || name.toLowerCase() === 'admin';
+    
+    setUser({ name, email, isLoggedIn: true, isAdmin });
+    
     if (currentSection !== Section.VOLUNTEER) {
-      setCurrentSection(Section.USER_DASHBOARD); 
+      setCurrentSection(isAdmin ? Section.ADMIN : Section.USER_DASHBOARD); 
     }
   };
 
@@ -423,44 +453,57 @@ const App: React.FC = () => {
     </div>
   );
 
-  const renderAcademy = () => (
-    <div className="bg-white min-h-screen animate-fade-in">
-      <div className="bg-slate-100 py-16 text-center relative overflow-hidden">
-        <div className="absolute top-0 left-0 w-full h-full bg-[url('https://www.transparenttextures.com/patterns/rice-paper.png')] opacity-50"></div>
-        <h2 className="text-4xl font-serif font-bold text-slate-800 mb-4 relative z-10">佛学课程</h2>
-        <p className="text-slate-600 relative z-10">开启智慧之门 · 探索生命真谛</p>
-      </div>
+  const renderAcademy = () => {
+    // Helper to get color classes
+    const getColorClasses = (color: string) => {
+      switch(color) {
+        case 'green': return { bg: 'bg-green-100', text: 'text-green-700' };
+        case 'blue': return { bg: 'bg-blue-100', text: 'text-blue-700' };
+        case 'orange': return { bg: 'bg-orange-100', text: 'text-orange-700' };
+        default: return { bg: 'bg-purple-100', text: 'text-purple-700' };
+      }
+    };
 
-      <div className="max-w-6xl mx-auto px-6 py-16">
-        <div className="grid md:grid-cols-2 gap-12">
-           <div className="space-y-8">
-              <div className="bg-slate-50 p-8 rounded-2xl border border-slate-200">
-                <h3 className="text-xl font-bold text-slate-800 mb-4 border-l-4 border-monk-600 pl-4">初级佛学班</h3>
-                <p className="text-gray-600 mb-4">适合零基础学员，系统介绍佛教历史、基本教义（四圣谛、八正道）及基础礼仪。</p>
-                <span className="inline-block px-3 py-1 bg-green-100 text-green-700 text-xs rounded-full">招生中</span>
-              </div>
-              <div className="bg-slate-50 p-8 rounded-2xl border border-slate-200">
-                <h3 className="text-xl font-bold text-slate-800 mb-4 border-l-4 border-monk-600 pl-4">经典导读班</h3>
-                <p className="text-gray-600 mb-4">深入研读《金刚经》、《心经》、《法华经》等大乘经典，探究般若智慧。</p>
-                <span className="inline-block px-3 py-1 bg-blue-100 text-blue-700 text-xs rounded-full">每周六上课</span>
-              </div>
-              <div className="bg-slate-50 p-8 rounded-2xl border border-slate-200">
-                <h3 className="text-xl font-bold text-slate-800 mb-4 border-l-4 border-monk-600 pl-4">禅修实修营</h3>
-                <p className="text-gray-600 mb-4">通过坐禅、行香，学习调身、调息、调心，在动静之间体悟当下的力量。</p>
-                <span className="inline-block px-3 py-1 bg-orange-100 text-orange-700 text-xs rounded-full">每月举办</span>
-              </div>
-           </div>
-           
-           <div className="relative h-full min-h-[400px]">
-              <img src="https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?auto=format&fit=crop&q=80&w=800" className="w-full h-full object-cover rounded-2xl shadow-xl" alt="Library" />
-              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-8 rounded-b-2xl text-white">
-                <p className="font-serif text-lg">"深入经藏，智慧如海"</p>
-              </div>
-           </div>
+    return (
+      <div className="bg-white min-h-screen animate-fade-in">
+        <div className="bg-slate-100 py-16 text-center relative overflow-hidden">
+          <div className="absolute top-0 left-0 w-full h-full bg-[url('https://www.transparenttextures.com/patterns/rice-paper.png')] opacity-50"></div>
+          <h2 className="text-4xl font-serif font-bold text-slate-800 mb-4 relative z-10">佛学课程</h2>
+          <p className="text-slate-600 relative z-10">开启智慧之门 · 探索生命真谛</p>
+        </div>
+
+        <div className="max-w-6xl mx-auto px-6 py-16">
+          <div className="grid md:grid-cols-2 gap-12">
+            <div className="space-y-8">
+                {courses.map((course) => (
+                  <div key={course.id} className="bg-slate-50 p-8 rounded-2xl border border-slate-200">
+                    <h3 className="text-xl font-bold text-slate-800 mb-4 border-l-4 border-monk-600 pl-4">{course.title}</h3>
+                    <p className="text-gray-600 mb-4">{course.description}</p>
+                    <div className="flex gap-2">
+                      {course.tags.map((tag, idx) => {
+                        const style = getColorClasses(course.color);
+                        return (
+                          <span key={idx} className={`inline-block px-3 py-1 ${style.bg} ${style.text} text-xs rounded-full`}>
+                            {tag}
+                          </span>
+                        );
+                      })}
+                    </div>
+                  </div>
+                ))}
+            </div>
+            
+            <div className="relative h-full min-h-[400px]">
+                <img src="https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?auto=format&fit=crop&q=80&w=800" className="w-full h-full object-cover rounded-2xl shadow-xl" alt="Library" />
+                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-8 rounded-b-2xl text-white">
+                  <p className="font-serif text-lg">"深入经藏，智慧如海"</p>
+                </div>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-  );
+    );
+  };
 
   return (
     <div className="min-h-screen bg-monk-50/30 font-sans text-gray-800">
@@ -480,7 +523,7 @@ const App: React.FC = () => {
         {currentSection === Section.HOME && renderHome()}
         {currentSection === Section.ABOUT && renderAbout()}
         {currentSection === Section.ACADEMY && renderAcademy()}
-        {currentSection === Section.EVENTS && <EventCalendar events={mockEvents} />}
+        {currentSection === Section.EVENTS && <EventCalendar events={events} />}
         {currentSection === Section.SHARING && (
           <SharingSection 
             items={sharingItems} 
@@ -496,6 +539,16 @@ const App: React.FC = () => {
           />
         )}
         {currentSection === Section.USER_DASHBOARD && <UserDashboard user={user} />}
+        
+        {/* Admin Section */}
+        {currentSection === Section.ADMIN && user.isAdmin && (
+           <AdminDashboard 
+             events={events} setEvents={setEvents}
+             donations={donationItems} setDonations={setDonationItems}
+             sharing={sharingItems} setSharing={setSharingItems}
+             courses={courses} setCourses={setCourses}
+           />
+        )}
         
         {/* Donation Flow Logic */}
         {currentSection === Section.DONATE && (
