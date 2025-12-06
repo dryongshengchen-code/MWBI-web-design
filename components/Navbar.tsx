@@ -18,6 +18,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentSection, onNavigate, user
     { label: '佛学课程', value: Section.ACADEMY },
     { label: '法务行事', value: Section.EVENTS },
     { label: '善行分享', value: Section.SHARING },
+    { label: '义工天地', value: Section.VOLUNTEER },
     { label: '功德护持', value: Section.DONATE },
   ];
 
@@ -34,7 +35,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentSection, onNavigate, user
           </div>
 
           {/* Desktop Nav */}
-          <div className="hidden md:flex space-x-6 items-center">
+          <div className="hidden md:flex space-x-4 items-center">
             {navItems.map((item) => (
               <button
                 key={item.value}

@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Navbar } from './components/Navbar';
 import { AuthModal } from './components/AuthModal';
 import { ZenChat } from './components/ZenChat';
@@ -9,7 +9,8 @@ import { UserDashboard } from './components/UserDashboard';
 import { DonationMarketplace } from './components/DonationMarketplace';
 import { DonationCart } from './components/DonationCart';
 import { DonationCheckout } from './components/DonationCheckout';
-import { Section, User, DonationItem, EventItem, SharingItem, CartItem } from './types';
+import { VolunteerForum } from './components/VolunteerForum';
+import { Section, User, DonationItem, EventItem, SharingItem, CartItem, ForumPost } from './types';
 
 // Mock Data for Donations
 const donationItems: DonationItem[] = [
@@ -44,7 +45,7 @@ const donationItems: DonationItem[] = [
     title: '建寺安僧与弘法基金',
     description: '护持道场日常运作，安顿僧众生活，举办弘法利生之活动，维护道场庄严。',
     minAmount: 20,
-    image: 'https://pei.gebis.org/wp-content/uploads/2022/05/%E5%A6%82%E6%84%8F%E9%BD%8B%E4%B8%BB1200X674.jpg?auto=format&fit=crop&q=80&w=800',
+    image: 'https://images.unsplash.com/photo-1598555235282-53603d6f1473?auto=format&fit=crop&q=80&w=800', // Updated to reliable image
     category: 'charity'
   },
   {
@@ -181,6 +182,43 @@ const initialSharingItems: SharingItem[] = [
   }
 ];
 
+const initialForumPosts: ForumPost[] = [
+  {
+    id: 'f1',
+    title: '【招募】观音诞法会需要现场引导义工',
+    author: '弘法组',
+    date: '2024-03-01',
+    category: 'RECRUIT',
+    content: '阿弥陀佛！下周日观音诞法会，预计人流较多，现急需5名师兄协助现场秩序引导及签到工作。时间：上午8:30-12:30。随喜发心！',
+    replies: 5
+  },
+  {
+    id: 'f2',
+    title: '请问初级禅修班报名还有名额吗？',
+    author: '慧心',
+    date: '2024-03-05',
+    category: 'QNA',
+    content: '想带朋友一起参加下个月的禅修班，不知道是否还能报名？感恩。',
+    replies: 2
+  },
+  {
+    id: 'f3',
+    title: '大寮清理积水，感恩几位师兄的付出',
+    author: '后勤组',
+    date: '2024-02-28',
+    category: 'SHARING',
+    content: '昨日暴雨，厨房后门有些积水。感恩张师兄、李师兄冒雨清理疏通，保证了道场的整洁。',
+    replies: 12
+  }
+];
+
+// Hero Background Images
+const heroImages = [
+  "https://pei.gebis.org/wp-content/uploads/2022/07/about-sec-pic-3.jpg?auto=format&fit=crop&q=80&w=1920",
+  "https://images.unsplash.com/photo-1600609842388-3e449195d2c4?q=80&w=1920&auto=format&fit=crop", // Serene temple vibes
+  "https://images.unsplash.com/photo-1592348529249-165f14844331?q=80&w=1920&auto=format&fit=crop"  // Another temple view
+];
+
 const App: React.FC = () => {
   const [currentSection, setCurrentSection] = useState<Section>(Section.HOME);
   const [isAuthOpen, setIsAuthOpen] = useState(false);
@@ -193,9 +231,26 @@ const App: React.FC = () => {
   // Sharing State
   const [sharingItems, setSharingItems] = useState<SharingItem[]>(initialSharingItems);
 
+  // Forum State
+  const [forumPosts, setForumPosts] = useState<ForumPost[]>(initialForumPosts);
+
+  // Hero Image Slider State
+  const [currentHeroIndex, setCurrentHeroIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentHeroIndex((prev) => (prev + 1) % heroImages.length);
+    }, 5000); // Change image every 5 seconds
+
+    return () => clearInterval(interval);
+  }, []);
+
   const handleLogin = (name: string, email: string) => {
     setUser({ name, email, isLoggedIn: true });
-    setCurrentSection(Section.USER_DASHBOARD); // Auto redirect to dashboard on login
+    // If user was trying to access volunteer forum, they can stay there, otherwise go to dashboard
+    if (currentSection !== Section.VOLUNTEER) {
+      setCurrentSection(Section.USER_DASHBOARD); 
+    }
   };
 
   const handleLogout = () => {
@@ -247,16 +302,40 @@ const App: React.FC = () => {
     }));
   };
 
+  // Forum Post Handler
+  const handleForumPost = (post: Omit<ForumPost, 'id' | 'date' | 'replies'>) => {
+    const newPost: ForumPost = {
+      ...post,
+      id: Date.now().toString(),
+      date: new Date().toISOString().split('T')[0],
+      replies: 0
+    };
+    setForumPosts(prev => [newPost, ...prev]);
+  };
+
   const renderHome = () => (
     <div className="animate-fade-in">
-      {/* Hero Section */}
-      <div className="relative h-[85vh] w-full overflow-hidden">
-        <div className="absolute inset-0 bg-black/30 z-10" />
-        <img 
-          src="https://pei.gebis.org/wp-content/uploads/2022/07/about-sec-pic-3.jpg?auto=format&fit=crop&q=80&w=1920" 
-          alt="Tang Style Temple Architecture" 
-          className="w-full h-full object-cover scale-105 animate-slow-zoom"
-        />
+      {/* Hero Section with Slider */}
+      <div className="relative h-[85vh] w-full overflow-hidden bg-black">
+        <div className="absolute inset-0 z-10 bg-black/30" />
+        
+        {heroImages.map((img, index) => (
+          <div
+            key={img}
+            className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
+              index === currentHeroIndex ? 'opacity-100' : 'opacity-0'
+            }`}
+          >
+             <img 
+              src={img} 
+              alt="Temple Architecture" 
+              className={`w-full h-full object-cover transition-transform duration-[6000ms] ease-in-out ${
+                index === currentHeroIndex ? 'scale-110' : 'scale-100'
+              }`}
+            />
+          </div>
+        ))}
+        
         <div className="absolute inset-0 z-20 flex flex-col items-center justify-center text-center px-4">
           <div className="mb-6 animate-fade-in-up">
              <div className="inline-block p-4 border-2 border-white/30 rounded-full mb-4">
@@ -279,6 +358,19 @@ const App: React.FC = () => {
           >
             护持道场
           </button>
+        </div>
+        
+        {/* Slider Indicators */}
+        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-20 flex gap-3">
+          {heroImages.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => setCurrentHeroIndex(index)}
+              className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${
+                index === currentHeroIndex ? 'bg-white w-8' : 'bg-white/40 hover:bg-white/60'
+              }`}
+            />
+          ))}
         </div>
       </div>
 
@@ -393,6 +485,14 @@ const App: React.FC = () => {
           <SharingSection 
             items={sharingItems} 
             onReact={handleReaction} 
+          />
+        )}
+        {currentSection === Section.VOLUNTEER && (
+          <VolunteerForum 
+            user={user} 
+            onLoginClick={() => setIsAuthOpen(true)}
+            posts={forumPosts}
+            onPostCreate={handleForumPost}
           />
         )}
         {currentSection === Section.USER_DASHBOARD && <UserDashboard user={user} />}

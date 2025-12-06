@@ -7,7 +7,8 @@ export enum Section {
   SHARING = 'SHARING',
   DONATE = 'DONATE',
   CONTACT = 'CONTACT',
-  USER_DASHBOARD = 'USER_DASHBOARD'
+  USER_DASHBOARD = 'USER_DASHBOARD',
+  VOLUNTEER = 'VOLUNTEER'
 }
 
 export type DonationCategoryType = 'construction' | 'dharma' | 'charity' | 'academy';
@@ -64,4 +65,14 @@ export interface SharingItem {
     rejoice: number; // ❤️
     zen: number;     // 🌸
   };
+}
+
+export interface ForumPost {
+  id: string;
+  title: string;
+  author: string;
+  date: string;
+  content: string;
+  category: 'NOTICE' | 'RECRUIT' | 'SHARING' | 'QNA';
+  replies?: number;
 }
