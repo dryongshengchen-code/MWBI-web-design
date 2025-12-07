@@ -238,9 +238,9 @@ const initialForumPosts: ForumPost[] = [
 
 // Hero Background Images
 const heroImages = [
-  "https://pei.gebis.org/wp-content/uploads/2022/07/about-sec-pic-3.jpg?auto=format&fit=crop&q=80&w=1920",
-  "https://images.unsplash.com/photo-1600609842388-3e449195d2c4?q=80&w=1920&auto=format&fit=crop", 
-  "https://images.unsplash.com/photo-1592348529249-165f14844331?q=80&w=1920&auto=format&fit=crop"
+  "https://offering.gebis.org/src/img/upload/projects/dona_use.id=1539_20220504093137.jpg?auto=format&fit=crop&q=80&w=1920",
+  "https://gebistoronto.org/wp-content/uploads/2021/08/sc-2-1.png?q=80&w=1920&auto=format&fit=crop", 
+  "https://image.cdn-eztravel.com.tw/lDVGD0f6OnsOoYIWjRwp6QYMqdyh78b6UwWLHuw2RH0/g:ce/aHR0cHM6Ly92YWNhdGlvbi5jZG4tZXp0cmF2ZWwuY29tLnR3L2ltZy9WRFIvQ0FfMzA0MDA1NjQ3LmpwZw.jpg?q=80&w=1920&auto=format&fit=crop"
 ];
 
 const App: React.FC = () => {
